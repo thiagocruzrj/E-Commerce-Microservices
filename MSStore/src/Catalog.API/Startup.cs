@@ -1,3 +1,5 @@
+using Catalog.API.Data;
+using Catalog.API.Data.Interfaces;
 using Catalog.API.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +24,8 @@ namespace Catalog.API
             services.AddControllers();
             services.Configure<CatalogDbSettings>(Configuration.GetSection(nameof(CatalogDbSettings)));
             services.AddSingleton<ICatalogDbSettings>(sp => sp.GetRequiredService<IOptions<CatalogDbSettings>>().Value);
+
+            services.AddTransient<ICatalogContext, CatalogContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
