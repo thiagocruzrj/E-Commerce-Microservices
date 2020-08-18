@@ -27,9 +27,10 @@ namespace Catalog.API.Repositories
             return await _catalogContext.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<IEnumerable<Product>> GetProductByCategory(string categoryName)
+        public async Task<IEnumerable<Product>> GetProductByCategory(string categoryName)
         {
-            throw new NotImplementedException();
+            FilterDefinition<Product> filter = Builders<Product>.Filter.ElemMatch(p => p.Category, categoryName);
+            return await _catalogContext.Products.Find(filter).ToListAsync();
         }
 
         public Task<IEnumerable<Product>> GetProductByName(string name)
