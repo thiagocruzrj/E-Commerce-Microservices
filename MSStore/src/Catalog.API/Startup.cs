@@ -52,6 +52,12 @@ namespace Catalog.API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog API V1");
+            });
         }
     }
 }
