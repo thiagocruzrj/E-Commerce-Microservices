@@ -39,9 +39,9 @@ namespace Catalog.API.Repositories
             return await _catalogContext.Products.Find(filter).ToListAsync();
         }
 
-        public Task Create(Product product)
+        public async Task Create(Product product)
         {
-            throw new NotImplementedException();
+            await _catalogContext.Products.InsertOneAsync(product);
         }
 
         public Task<bool> Update(Product product)
