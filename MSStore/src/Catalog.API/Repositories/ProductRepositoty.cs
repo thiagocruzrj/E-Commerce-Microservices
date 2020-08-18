@@ -44,9 +44,10 @@ namespace Catalog.API.Repositories
             await _catalogContext.Products.InsertOneAsync(product);
         }
 
-        public Task<bool> Update(Product product)
+        public async Task<bool> Update(Product product)
         {
-            throw new NotImplementedException();
+            var updateResult = await _catalogContext.Products.ReplaceOneAsync(filter: g => g.Id == product.Id, replacement: product);
+            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
 
         public Task<bool> Delete(Product product)
