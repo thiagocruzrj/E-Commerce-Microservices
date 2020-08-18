@@ -1,4 +1,5 @@
-﻿using Catalog.API.Entities;
+﻿using Catalog.API.Data.Interfaces;
+using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,13 @@ namespace Catalog.API.Repositories
 {
     public class ProductRepositoty : IProductRepository
     {
+        private readonly ICatalogContext _catalogContext;
+
+        public ProductRepositoty(ICatalogContext catalogContext)
+        {
+            _catalogContext = catalogContext;
+        }
+
         public Task<IEnumerable<Product>> GetProducts()
         {
             throw new NotImplementedException();
