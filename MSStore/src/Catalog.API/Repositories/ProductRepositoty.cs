@@ -22,9 +22,9 @@ namespace Catalog.API.Repositories
             return await _catalogContext.Products.Find(p => true).ToListAsync();
         }
 
-        public Task<Product> GetProduct(string id)
+        public async Task<Product> GetProduct(string id)
         {
-            throw new NotImplementedException();
+            return await _catalogContext.Products.Find(p => p.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<IEnumerable<Product>> GetProductByCategory(string categoryName)
