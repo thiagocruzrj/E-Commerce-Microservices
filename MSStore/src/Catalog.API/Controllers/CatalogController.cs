@@ -72,7 +72,7 @@ namespace Catalog.API.Controllers
             return Ok(await _productRepository.Update(product));
         }
 
-        [HttpDelete("id{length(24)}")]
+        [HttpDelete("{id:length(24)}")]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> RemoveProduct(string id)
         {
