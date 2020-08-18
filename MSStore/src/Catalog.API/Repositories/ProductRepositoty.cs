@@ -50,9 +50,12 @@ namespace Catalog.API.Repositories
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
 
-        public Task<bool> Delete(Product product)
+        public async Task<bool> Delete(string id)
         {
-            throw new NotImplementedException();
+            FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(g => g.Id, id);
+            DeleteResult deleteResult = await _catalogContext.Products.DeleteOneAsync(filter);
+
+            return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
     }
 }
