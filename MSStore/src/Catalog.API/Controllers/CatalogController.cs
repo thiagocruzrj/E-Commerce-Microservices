@@ -1,6 +1,8 @@
 ﻿using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;
+using DnsClient.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -13,10 +15,12 @@ namespace Catalog.API.Controllers
     public class CatalogController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+        private readonly ILogger<CatalogController> _logger;
 
-        public CatalogController(IProductRepository productRepository)
+        public CatalogController(IProductRepository productRepository, ILogger<CatalogController> logger)
         {
             _productRepository = productRepository ?? throw new ArgumentException(nameof(productRepository));
+            _logger = logger ?? throw new ArgumentException(nameof(logger));
         }
 
         [HttpGet]
@@ -28,6 +32,7 @@ namespace Catalog.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Product>> GetProductById(string id)
         {
@@ -35,6 +40,7 @@ namespace Catalog.API.Controllers
 
             if (product == null)
             {
+                _logger.LogError($"Product with {id}, not found");
                 return NotFound();
             }
 
