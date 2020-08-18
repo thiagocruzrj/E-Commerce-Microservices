@@ -26,5 +26,19 @@ namespace Catalog.API.Controllers
             var products = await _productRepository.GetProducts();
             return Ok(products);
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Product>> GetProductById(string id)
+        {
+            var product = await _productRepository.GetProduct(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
     }
 }
