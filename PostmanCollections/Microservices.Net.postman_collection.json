@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "253036f5-266c-488e-b3eb-3ef456c7c1df",
+		"name": "Microservices.Net",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Catalog",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/v1/Catalog",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"Catalog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Catalog By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/v1/Catalog/5eca687efc6daa000110bef1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"Catalog",
+						"5eca687efc6daa000110bef1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Category By Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/v1/Catalog/GetProductByCategory/Smart Phone",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"Catalog",
+						"GetProductByCategory",
+						"Smart Phone"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Catalog",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n    \"name\": \"Asus Laptop\",\r\n    \"category\": \"Computers\",\r\n    \"summary\": \"Summary\",\r\n    \"description\": \"Description\",\r\n    \"imageFile\": \"ImageFile\",\r\n    \"price\": 54.93\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/Catalog",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"Catalog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Basket By UserName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/api/v1/Basket?username=swn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"v1",
+						"Basket"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "swn"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Basket",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"UserName\": \"swn\",\r\n    \"Items\": [\r\n    {\r\n        \"Quantity\": 2,\r\n        \"Color\": \"Red\",\r\n        \"Price\": 33,\r\n        \"ProductId\": 5\r\n    },\r\n    {\r\n        \"Quantity\": 1,\r\n        \"Color\": \"Blue\",\r\n        \"Price\": 55,\r\n        \"ProductId\": 3\r\n    }\r\n    ]  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/v1/Basket",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"v1",
+						"Basket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Basket Checkout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"swn\",\r\n    \"totalPrice\": 10,\r\n    \"firstName\": \"swn\",\r\n    \"lastName\": \"swn\",\r\n    \"emailAddress\": \"string\",\r\n    \"addressLine\": \"string\",\r\n    \"country\": \"string\",\r\n    \"state\": \"string\",\r\n    \"zipCode\": \"string\",\r\n    \"cardName\": \"string\",\r\n    \"cardNumber\": \"string\",\r\n    \"expiration\": \"string\",\r\n    \"cvv\": \"string\",\r\n    \"paymentMethod\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/api/v1/Basket/Checkout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"api",
+						"v1",
+						"Basket",
+						"Checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Order By UserName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8002/api/v1/Order?username=swn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8002",
+					"path": [
+						"api",
+						"v1",
+						"Order"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "swn"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Order Local Debug",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5002/api/v1/Order?username=swn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"v1",
+						"Order"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "swn"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
