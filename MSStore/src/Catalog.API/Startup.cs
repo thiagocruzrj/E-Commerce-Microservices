@@ -25,6 +25,7 @@ namespace Catalog.API
         {
             services.AddControllers();
             services.Configure<CatalogDbSettings>(Configuration.GetSection(nameof(CatalogDbSettings)));
+
             services.AddSingleton<ICatalogDbSettings>(sp => sp.GetRequiredService<IOptions<CatalogDbSettings>>().Value);
 
             services.AddTransient<ICatalogContext, CatalogContext>();
