@@ -57,13 +57,19 @@ namespace Catalog.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
             await _productRepository.Create(product);
 
             return CreatedAtRoute("GetProduct", new { product.Id }, product);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<Product>> UpdateProduct([FromBody] Product product)
+        {
+            return Ok(await _productRepository.Update(product));
         }
     }
 }
