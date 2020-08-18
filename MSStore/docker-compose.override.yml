@@ -12,8 +12,7 @@ services:
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - "CatalogDbSettings:ConnectionString=mongodb://localhost:27017"
+      - "CatalogDbSettings:ConnectionString=mongodb://catalogdb:27017"
     depends_on:
       - catalogdb
     volumes:
