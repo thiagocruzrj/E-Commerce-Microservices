@@ -56,7 +56,7 @@ namespace Catalog.API.Controllers
             return Ok(products);
         }
 
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
