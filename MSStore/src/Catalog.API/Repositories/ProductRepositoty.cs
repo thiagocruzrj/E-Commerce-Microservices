@@ -1,6 +1,7 @@
 ﻿using Catalog.API.Data.Interfaces;
 using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,12 +14,12 @@ namespace Catalog.API.Repositories
 
         public ProductRepositoty(ICatalogContext catalogContext)
         {
-            _catalogContext = catalogContext;
+            _catalogContext = catalogContext ?? throw new ArgumentException(nameof(catalogContext));
         }
 
-        public Task<IEnumerable<Product>> GetProducts()
+        public async Task<IEnumerable<Product>> GetProducts()
         {
-            throw new NotImplementedException();
+            return await _catalogContext.Products.Find(p => true).ToListAsync();
         }
 
         public Task<Product> GetProduct(string id)
