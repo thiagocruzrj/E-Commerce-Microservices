@@ -1,4 +1,6 @@
-﻿namespace ShopCart.API.Data.Interfaces
+﻿using StackExchange.Redis;
+
+namespace ShopCart.API.Data.Interfaces
 {
     public interface IShopCartContext
     {
