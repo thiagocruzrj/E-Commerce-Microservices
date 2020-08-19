@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using ShopCart.API.Data;
 using ShopCart.API.Data.Interfaces;
 using ShopCart.API.Repositories;
@@ -31,6 +32,11 @@ namespace ShopCart.API
             services.AddTransient<IShopCartContext, ShopCartContext>();
             services.AddTransient<IShopCartRepository, ShopCartRepository>();
 
+            services.AddSwaggerGen(c => 
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping Cart API", Version = "v1" });
+            });
+
             services.AddControllers();
         }
 
@@ -48,6 +54,12 @@ namespace ShopCart.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "Shopping Cart API");
             });
         }
     }
