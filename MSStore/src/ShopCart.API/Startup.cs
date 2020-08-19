@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShopCart.API.Data;
+using ShopCart.API.Data.Interfaces;
+using ShopCart.API.Repositories;
+using ShopCart.API.Repositories.Interfaces;
 using StackExchange.Redis;
 
 namespace ShopCart.API
@@ -23,6 +27,9 @@ namespace ShopCart.API
                 var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
                 return ConnectionMultiplexer.Connect(configuration);
             });
+
+            services.AddTransient<IShopCartContext, ShopCartContext>();
+            services.AddTransient<IShopCartRepository, ShopCartRepository>();
 
             services.AddControllers();
         }
