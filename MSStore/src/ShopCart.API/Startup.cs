@@ -59,7 +59,7 @@ namespace ShopCart.API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("swagger/v1/swagger.json", "Shopping Cart API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Shopping Cart API");
             });
         }
     }
