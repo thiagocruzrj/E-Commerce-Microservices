@@ -24,5 +24,12 @@ namespace ShopCart.API.Controllers
             var shopCart = await _shopCartRepository.GetShopCart(userName);
             return Ok(shopCart);
         }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(ShoppingCart), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<ShoppingCart>> UpdateShopCart([FromBody]ShoppingCart shoppingCart)
+        {
+            return Ok(await _shopCartRepository.UpdateShopCart(shoppingCart));
+        }
     }
 }
