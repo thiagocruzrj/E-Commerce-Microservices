@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StackExchange.Redis;
 
 namespace ShopCart.API
 {
@@ -17,6 +18,12 @@ namespace ShopCart.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(sp => 
+            {
+                var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
+                return ConnectionMultiplexer.Connect(configuration);
+            });
+
             services.AddControllers();
         }
 
