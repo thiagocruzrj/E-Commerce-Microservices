@@ -18,17 +18,24 @@ namespace ShopCart.API.Repositories
 
         public async Task<ShoppingCart> GetShopCart(string userName)
         {
-            var shopCart = await _shopCartContext.Redis.StringGetAsync(userName);
+            var getShopCart = await _shopCartContext.Redis.StringGetAsync(userName);
 
-            if (shopCart.IsNullOrEmpty)
+            if (getShopCart.IsNullOrEmpty)
                 return null;
 
-            return JsonConvert.DeserializeObject<ShoppingCart>(shopCart);
+            return JsonConvert.DeserializeObject<ShoppingCart>(getShopCart);
         }
 
-        public Task<ShoppingCart> UpdateShopCart(ShoppingCart shopCart)
+        public async Task<ShoppingCart> UpdateShopCart(ShoppingCart shopCart)
         {
-            throw new NotImplementedException();
+            var updatedShopCart = await _shopCartContext.Redis.StringSetAsync(shopCart.UserName, JsonConvert.SerializeObject(shopCart));
+
+            if(!updatedShopCart)
+            {
+                return null;
+            }
+
+            return await GetShopCart(shopCart.UserName);
         }
 
         public Task<bool> DeleteShopCart(string userName)
