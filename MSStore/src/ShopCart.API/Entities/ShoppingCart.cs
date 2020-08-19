@@ -2,14 +2,14 @@
 
 namespace ShopCart.API.Entities
 {
-    public class ShopCart
+    public class ShoppingCart
     {
         public string UserName { get; set; }
         public List<ShopCartItem> Items { get; set; } = new List<ShopCartItem>();
 
-        public ShopCart() { }
+        public ShoppingCart() { }
 
-        public ShopCart(string userName)
+        public ShoppingCart(string userName)
         {
             UserName = userName;
         }
