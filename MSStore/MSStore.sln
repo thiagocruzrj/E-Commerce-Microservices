@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.API", "src\Catalog.
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3FF49D22-DF41-4927-8204-AA085D098268}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCart.API", "src\ShopCart.API\ShopCart.API.csproj", "{7AA10BF0-E7FF-43DD-82DA-C008661052F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{3FF49D22-DF41-4927-8204-AA085D098268}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FF49D22-DF41-4927-8204-AA085D098268}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FF49D22-DF41-4927-8204-AA085D098268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AA10BF0-E7FF-43DD-82DA-C008661052F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AA10BF0-E7FF-43DD-82DA-C008661052F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AA10BF0-E7FF-43DD-82DA-C008661052F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AA10BF0-E7FF-43DD-82DA-C008661052F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DBC886D2-999E-4BDA-B414-22D26106F8B9} = {215BB6C1-E223-4268-8744-0C4A6A7CAB3D}
+		{7AA10BF0-E7FF-43DD-82DA-C008661052F7} = {215BB6C1-E223-4268-8744-0C4A6A7CAB3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6698D370-3310-4A26-8D82-AEF8362DF471}
