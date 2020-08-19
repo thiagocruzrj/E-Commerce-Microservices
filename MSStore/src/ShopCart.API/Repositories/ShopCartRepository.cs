@@ -38,9 +38,9 @@ namespace ShopCart.API.Repositories
             return await GetShopCart(shopCart.UserName);
         }
 
-        public Task<bool> DeleteShopCart(string userName)
+        public async Task<bool> DeleteShopCart(string userName)
         {
-            throw new NotImplementedException();
+            return await _shopCartContext.Redis.KeyDeleteAsync(userName);
         }
     }
 }
