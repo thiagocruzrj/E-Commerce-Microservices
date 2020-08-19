@@ -8,6 +8,11 @@ services:
         - ${WEBAPP_STORAGE_HOME}/site:/data/db
     ports:
         - "27017:27017"
+  shopcartdb:
+    container_name: shopcartdb
+    restart: always
+    ports:
+        - "6379:6379"
 
   catalog.api:
     environment:
@@ -20,3 +25,14 @@ services:
         - ${HOME}/.aspnet/https:/root/aspnet/https/
     ports:
       - "8000:80"
+  shopcart.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:Redis=shopcartdb:6379"
+    depends_on:
+      - shopcartdb
+    volumes:
+        - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+        - ${HOME}/.aspnet/https:/root/aspnet/https/
+    ports:
+      - "8001:80"
