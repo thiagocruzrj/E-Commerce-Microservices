@@ -1,14 +1,13 @@
 ﻿using ShopCart.API.Data.Interfaces;
 using StackExchange.Redis;
-using System;
 
 namespace ShopCart.API.Data
 {
     public class ShopCartContext : IShopCartContext
     {
-        private readonly IConnectionMultiplexer _redisConnection;
+        private readonly ConnectionMultiplexer _redisConnection;
 
-        public ShopCartContext(IConnectionMultiplexer redisConnection)
+        public ShopCartContext(ConnectionMultiplexer redisConnection)
         {
             _redisConnection = redisConnection;
             Redis = _redisConnection.GetDatabase();
