@@ -54,15 +54,12 @@ namespace ShopCart.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Checkout([FromBody] ShopCartCheckout shopCartCheckout)
         {
-            // get total shopcart total price
             var shopCart = await _shopCartRepository.GetShopCart(shopCartCheckout.UserName); 
             if (shopCart == null) return BadRequest();
 
-            // remove shop cart
             var shopCartRemoved = await _shopCartRepository.DeleteShopCart(shopCart.UserName);
             if (!shopCartRemoved) return BadRequest();
 
-            // send checkout event to rabbitmq
             var eventMessage = _mapper.Map<ShopCartCheckoutEvent>(shopCartCheckout);
             eventMessage.RequestId = Guid.NewGuid();
             eventMessage.TotalPrice = shopCart.TotalPrice;
