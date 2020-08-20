@@ -1,5 +1,7 @@
 ﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Exceptions;
 using System;
+using System.Threading;
 
 namespace EventBusRabbitMQ
 {
@@ -23,19 +25,49 @@ namespace EventBusRabbitMQ
             }
         }
 
-        public IModel CreateModel()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public bool TryConnect()
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _connection = _connectionFactory.CreateConnection();
+            }
+            catch(BrokerUnreachableException)
+            {
+                Thread.Sleep(2000);
+                _connection = _connectionFactory.CreateConnection();
+            }
+
+            if (IsConnected)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+        public IModel CreateModel()
+        {
+            if (!IsConnected)
+            {
+                throw new InvalidOperationException("No rabbitmq connection");
+            }
+
+            return _connection.CreateModel();
         }
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            if(_disposed) return;
+
+            try
+            {
+                _connection.Dispose();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
