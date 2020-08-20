@@ -1,3 +1,4 @@
+using AutoMapper;
 using EventBusRabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +36,7 @@ namespace ShopCart.API
 
             services.AddTransient<IShopCartContext, ShopCartContext>();
             services.AddTransient<IShopCartRepository, ShopCartRepository>();
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddSwaggerGen(c => 
             {
@@ -60,6 +62,7 @@ namespace ShopCart.API
 
                 return new RabbitMQConnection(factory);
             });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
