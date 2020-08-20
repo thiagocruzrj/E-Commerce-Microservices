@@ -55,7 +55,7 @@ namespace ShopCart.API.Controllers
         public async Task<IActionResult> Checkout([FromBody] ShopCartCheckout shopCartCheckout)
         {
             // get total shopcart total price
-            var shopCart = await _shopCartRepository.GetShopCart(shopCartCheckout.UserName);
+            var shopCart = await _shopCartRepository.GetShopCart(shopCartCheckout.UserName); 
             if (shopCart == null) return BadRequest();
 
             // remove shop cart

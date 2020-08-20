@@ -1,5 +1,6 @@
 using AutoMapper;
 using EventBusRabbitMQ;
+using EventBusRabbitMQ.Producer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -63,6 +64,7 @@ namespace ShopCart.API
                 return new RabbitMQConnection(factory);
             });
 
+            services.AddSingleton<EventBusRabbitMQProducer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

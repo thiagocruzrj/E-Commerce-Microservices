@@ -22,7 +22,7 @@ namespace ShopCart.API.Entities
                 {
                     totalPrice += item.Price * item.Quantity;
                 }
-                return 0; 
+                return totalPrice; 
             } 
         }
     }
