@@ -15,7 +15,7 @@ namespace EventBusRabbitMQ.Producer
             _connection = connection ?? throw new ArgumentException(nameof(connection));
         }
 
-        public void PublishShopCartCheckout(string queueName, ShopCartCheckouEvent publishModel)
+        public void PublishShopCartCheckout(string queueName, ShopCartCheckoutEvent publishModel)
         {
             using(var channel = _connection.CreateModel())
             {

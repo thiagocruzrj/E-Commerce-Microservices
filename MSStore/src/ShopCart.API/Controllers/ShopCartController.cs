@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using EventBusRabbitMQ.Events;
+using Microsoft.AspNetCore.Mvc;
 using ShopCart.API.Entities;
 using ShopCart.API.Repositories.Interfaces;
 using System.Net;
@@ -11,10 +13,12 @@ namespace ShopCart.API.Controllers
     public class ShopCartController : ControllerBase
     {
         private readonly IShopCartRepository _shopCartRepository;
+        private readonly IMapper _mapper;
 
-        public ShopCartController(IShopCartRepository shopCartRepository)
+        public ShopCartController(IShopCartRepository shopCartRepository, IMapper mapper)
         {
             _shopCartRepository = shopCartRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -45,7 +49,16 @@ namespace ShopCart.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Checkout([FromBody] ShopCartCheckout shopCartCheckout)
         {
-            
+            // get total shopcart total price
+            var shopCart = await _shopCartRepository.GetShopCart(shopCartCheckout.UserName);
+            if (shopCart == null) return BadRequest();
+
+            // remove shop cart
+            var shopCartRemoved = await _shopCartRepository.DeleteShopCart(shopCart.UserName);
+            if (!shopCartRemoved) return BadRequest();
+
+            // send checkout event to rabbitmq
+            var eventMessage = _mapper.Map<ShopCartCheckoutEvent>(shopCartCheckout);
         }
     }
 }

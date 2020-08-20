@@ -2,7 +2,7 @@
 
 namespace EventBusRabbitMQ.Events
 {
-    public class ShopCartCheckouEvent
+    public class ShopCartCheckoutEvent
     {
         public Guid RequestId { get; set; }
         public string UserName { get; set; }
