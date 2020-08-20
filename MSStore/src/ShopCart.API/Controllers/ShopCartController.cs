@@ -38,5 +38,14 @@ namespace ShopCart.API.Controllers
         {
             return Ok(await _shopCartRepository.DeleteShopCart(userName));
         }
+
+        [Route("[action]")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Checkout([FromBody] ShopCartCheckout shopCartCheckout)
+        {
+            
+        }
     }
 }
