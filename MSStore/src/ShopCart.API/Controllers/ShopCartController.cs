@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using EventBusRabbitMQ.Events;
+using EventBusRabbitMQ.Producer;
 using Microsoft.AspNetCore.Mvc;
 using ShopCart.API.Entities;
 using ShopCart.API.Repositories.Interfaces;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -14,11 +16,13 @@ namespace ShopCart.API.Controllers
     {
         private readonly IShopCartRepository _shopCartRepository;
         private readonly IMapper _mapper;
+        private readonly EventBusRabbitMQProducer _eventBus;
 
-        public ShopCartController(IShopCartRepository shopCartRepository, IMapper mapper)
+        public ShopCartController(IShopCartRepository shopCartRepository, IMapper mapper, EventBusRabbitMQProducer eventBus)
         {
-            _shopCartRepository = shopCartRepository;
-            _mapper = mapper;
+            _shopCartRepository = shopCartRepository ?? throw new ArgumentException(nameof(shopCartRepository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
+            _eventBus = eventBus ?? throw new ArgumentException(nameof(eventBus));
         }
 
         [HttpGet]
@@ -59,6 +63,10 @@ namespace ShopCart.API.Controllers
 
             // send checkout event to rabbitmq
             var eventMessage = _mapper.Map<ShopCartCheckoutEvent>(shopCartCheckout);
+            eventMessage.RequestId = Guid.NewGuid();
+            eventMessage.TotalPrice = shopCart.TotalPrice;
+
+            _eventBus.
         }
     }
 }
