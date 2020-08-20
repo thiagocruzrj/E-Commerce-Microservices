@@ -30,6 +30,12 @@ namespace EventBusRabbitMQ.Producer
                 channel.ConfirmSelect();
                 channel.BasicPublish("", queueName, true, properties, body);
                 channel.WaitForConfirmsOrDie();
+
+                channel.BasicAcks += (sender, eventArgs) =>
+                {
+                    Console.WriteLine("Send to RabbitMq");
+                };
+                channel.ConfirmSelect();
             }
         }
     }
