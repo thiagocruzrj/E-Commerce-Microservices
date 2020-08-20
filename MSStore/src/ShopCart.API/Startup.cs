@@ -23,6 +23,7 @@ namespace ShopCart.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddSingleton(sp => 
             {
                 var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
@@ -37,7 +38,6 @@ namespace ShopCart.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping Cart API", Version = "v1" });
             });
 
-            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
