@@ -22,6 +22,10 @@ namespace EventBusRabbitMQ.Producer
                 channel.QueueDeclare(queueName, false, false, false, null);
                 var message = JsonConvert.SerializeObject(publishModel);
                 var body = Encoding.UTF8.GetBytes(message);
+
+                IBasicProperties properties = channel.CreateBasicProperties();
+                properties.Persistent = true;
+                properties.DeliveryMode = 2;
             }
         }
     }
