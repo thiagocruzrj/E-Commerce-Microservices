@@ -26,6 +26,10 @@ namespace EventBusRabbitMQ.Producer
                 IBasicProperties properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
                 properties.DeliveryMode = 2;
+
+                channel.ConfirmSelect();
+                channel.BasicPublish("", queueName, true, properties, body);
+                channel.WaitForConfirmsOrDie();
             }
         }
     }
