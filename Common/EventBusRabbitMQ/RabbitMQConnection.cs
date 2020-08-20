@@ -1,10 +1,27 @@
 ﻿using RabbitMQ.Client;
+using System;
 
 namespace EventBusRabbitMQ
 {
     public class RabbitMQConnection : IRabbitMQConnection
     {
-        public bool IsConnected => throw new System.NotImplementedException();
+        private readonly IConnectionFactory _connectionFactory;
+        private IConnection _connection;
+        private bool _disposed;
+
+        public RabbitMQConnection(IConnectionFactory connectionFactory)
+        {
+            _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+            if (!IsConnected)
+                TryConnect();
+        }
+        public bool IsConnected
+        {
+            get
+            {
+                return _connection != null && _connection.IsOpen && !_disposed;
+            }
+        }
 
         public IModel CreateModel()
         {
