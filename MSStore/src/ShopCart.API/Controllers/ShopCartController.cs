@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventBusRabbitMQ.Common;
 using EventBusRabbitMQ.Events;
 using EventBusRabbitMQ.Producer;
 using Microsoft.AspNetCore.Mvc;
@@ -66,7 +67,16 @@ namespace ShopCart.API.Controllers
             eventMessage.RequestId = Guid.NewGuid();
             eventMessage.TotalPrice = shopCart.TotalPrice;
 
-            _eventBus.
+            try
+            {
+                _eventBus.PublishShopCartCheckout(EventBusConstants.SHOPCART_CHECKOUT_QUEUE, eventMessage);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return Accepted();
         }
     }
 }
