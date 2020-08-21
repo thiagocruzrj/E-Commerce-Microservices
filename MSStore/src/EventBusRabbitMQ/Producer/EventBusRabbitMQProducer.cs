@@ -17,7 +17,7 @@ namespace EventBusRabbitMQ.Producer
 
         public void PublishShopCartCheckout(string queueName, ShopCartCheckoutEvent publishModel)
         {
-            using(var channel = _connection.CreateModel())
+            using (var channel = _connection.CreateModel())
             {
                 channel.QueueDeclare(queueName, false, false, false, null);
                 var message = JsonConvert.SerializeObject(publishModel);

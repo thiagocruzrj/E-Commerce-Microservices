@@ -31,7 +31,7 @@ namespace EventBusRabbitMQ
             {
                 _connection = _connectionFactory.CreateConnection();
             }
-            catch(BrokerUnreachableException)
+            catch (BrokerUnreachableException)
             {
                 Thread.Sleep(2000);
                 _connection = _connectionFactory.CreateConnection();
@@ -40,7 +40,8 @@ namespace EventBusRabbitMQ
             if (IsConnected)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
@@ -58,7 +59,7 @@ namespace EventBusRabbitMQ
 
         public void Dispose()
         {
-            if(_disposed) return;
+            if (_disposed) return;
 
             try
             {
