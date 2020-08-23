@@ -1,4 +1,6 @@
-﻿namespace Ordering.Core.Entities.Base
+﻿using System.Runtime.CompilerServices;
+
+namespace Ordering.Core.Entities.Base
 {
     public abstract class EntityBase<TId> : IEntityBase<TId>
     {
@@ -28,6 +30,19 @@
                 return false;
             else
                 return item == this;
+        }
+
+        public override int GetHashCode()
+        {
+            if (!IsTransient())
+            {
+                if (!_requestedHashCode.HasValue)
+                    _requestedHashCode = Id.GetHashCode() ^ 31;
+
+                return _requestedHashCode.Value;
+            }
+            else
+                return base.GetHashCode();
         }
     }
 }
