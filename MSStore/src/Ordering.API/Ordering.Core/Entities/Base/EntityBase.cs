@@ -4,7 +4,7 @@ namespace Ordering.Core.Entities.Base
 {
     public abstract class EntityBase<TId> : IEntityBase<TId>
     {
-        public virtual TId Id{ get; protected set; }
+        public virtual TId Id { get; protected set; }
 
         int? _requestedHashCode;
 
@@ -43,6 +43,19 @@ namespace Ordering.Core.Entities.Base
             }
             else
                 return base.GetHashCode();
+        }
+
+        public static bool operator ==(EntityBase<TId> left, EntityBase<TId> right)
+        {
+            if (Equals(left, null))
+                return Equals(right, null) ? true : false;
+            else
+                return left.Equals(right);
+        }
+
+        public static bool operator !=(EntityBase<TId> left, EntityBase<TId> right)
+        {
+            return !(left == right);
         }
     }
 }
