@@ -1,4 +1,6 @@
-﻿namespace Ordering.Core.Entities
+﻿using Ordering.Core.Entities.Base;
+
+namespace Ordering.Core.Entities
 {
     public class Order : Entity
     {

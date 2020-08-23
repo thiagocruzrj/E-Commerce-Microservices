@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Ordering.Core.Entities.Base
+﻿namespace Ordering.Core.Entities.Base
 {
     public abstract class EntityBase<TId> : IEntityBase<TId>
     {
