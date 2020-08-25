@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ordering.API.Controllers
 {
@@ -6,5 +7,6 @@ namespace Ordering.API.Controllers
     [Route("[controller]")]
     public class OrderController
     {
+
     }
 }
