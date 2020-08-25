@@ -6,6 +6,7 @@ using MediatR;
 using Newtonsoft.Json;
 using Ordering.Application.Commands;
 using Ordering.Core.Repositories;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Text;
@@ -35,7 +36,7 @@ namespace Ordering.API.RabbitMQ
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += ReceivedEvent;
 
-            channel.BasicConsume(EventBusConstants.SHOPCART_CHECKOUT_QUEUE, true, consumer, false, false, null);
+            channel.BasicConsume(EventBusConstants.SHOPCART_CHECKOUT_QUEUE, true, consumer);
         }
 
         private async void ReceivedEvent(object sender, BasicDeliverEventArgs e)
