@@ -64,7 +64,7 @@ namespace ShopCart.API
                 return new RabbitMQConnection(factory);
             });
 
-            services.AddSingleton<EventBusRabbitMQProducer>();
+            services.AddSingleton<EventBusRabbitMQConsumer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
