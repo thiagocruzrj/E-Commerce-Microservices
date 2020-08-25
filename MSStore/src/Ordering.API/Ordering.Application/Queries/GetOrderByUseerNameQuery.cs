@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Ordering.Application.Queries
 {
-    public class GetOrderByUseerNameQuery : IRequest<IEnumerable<OrderResponse>>
+    public class GetOrderByUserNameQuery : IRequest<IEnumerable<OrderResponse>>
     {
         public string UserName { get; set; }
 
-        public GetOrderByUseerNameQuery(string userName)
+        public GetOrderByUserNameQuery(string userName)
         {
             UserName = userName ?? throw new ArgumentException(nameof(userName));
         }
