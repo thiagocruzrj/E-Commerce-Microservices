@@ -78,6 +78,8 @@ namespace Ordering.Infra.Repositories.Base
 
         public async Task DeleteAsync(T entity)
         {
+            _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
