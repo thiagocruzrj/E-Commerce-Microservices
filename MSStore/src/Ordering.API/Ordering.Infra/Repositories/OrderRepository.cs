@@ -1,4 +1,5 @@
-﻿using Ordering.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Ordering.Core.Entities;
 using Ordering.Core.Repositories;
 using Ordering.Infra.Data;
 using Ordering.Infra.Repositories.Base;
@@ -11,6 +12,11 @@ namespace Ordering.Infra.Repositories
     public class OrderRepository : Repository<Order>, IOrderRepository
     {
         public OrderRepository(OrderContext dbContext) : base(dbContext) { }
+
+        public Task<IEnumerable<Order>> GetOrderByUserName(string userName)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public async Task<IEnumerable<Order>> GetOrdersByUserName(string userName)
         {
