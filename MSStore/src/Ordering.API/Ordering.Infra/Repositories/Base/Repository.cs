@@ -1,5 +1,6 @@
 ﻿using Ordering.Core.Entities.Base;
 using Ordering.Core.Repositories.Base;
+using Ordering.Infra.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,13 @@ namespace Ordering.Infra.Repositories.Base
 {
     public class Repository<T> : IRepository<T> where T : Entity
     {
+        protected readonly OrderContext _dbContext;
+
+        public Repository(OrderContext dbContext)
+        {
+            _dbContext = dbContext ?? throw new ArgumentException(nameof(dbContext));
+        }
+
         public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();
