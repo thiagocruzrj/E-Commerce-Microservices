@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Ordering.Application.Mapper;
 using Ordering.Application.Queries;
 using Ordering.Application.Responses;
 using Ordering.Core.Repositories;
@@ -22,6 +23,8 @@ namespace Ordering.Application.Handlers
         {
             var orderList = await _orderRepository.GetOrderByUserName(request.UserName);
             var orderResponseList = OrderMapper.Mapper.Map<IEnumerable<OrderResponse>>(orderList);
+
+            return orderResponseList;
         }
     }
 }
