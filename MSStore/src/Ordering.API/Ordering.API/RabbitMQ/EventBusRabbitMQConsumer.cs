@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
 using EventBusRabbitMQ;
+using EventBusRabbitMQ.Common;
+using EventBusRabbitMQ.Events;
 using MediatR;
+using Newtonsoft.Json;
 using Ordering.Core.Repositories;
+using RabbitMQ.Client.Events;
 using System;
+using System.Text;
 
 namespace Ordering.API.RabbitMQ
 {
@@ -19,6 +24,17 @@ namespace Ordering.API.RabbitMQ
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        }
+
+        public void Consume()
+        {
+            var channel = _connection.CreateModel();
+            channel.QueueDeclare(EventBusConstants.SHOPCART_CHECKOUT_QUEUE, false, false, false, null);
+
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += ReceivedEvent;
+
+            channel.BasicConsume(EventBusConstants.SHOPCART_CHECKOUT_QUEUE, true, consumer, false, false, null);
         }
     }
 }
