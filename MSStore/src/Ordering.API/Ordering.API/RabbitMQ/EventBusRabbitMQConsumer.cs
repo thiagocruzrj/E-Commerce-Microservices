@@ -4,6 +4,7 @@ using EventBusRabbitMQ.Common;
 using EventBusRabbitMQ.Events;
 using MediatR;
 using Newtonsoft.Json;
+using Ordering.Application.Commands;
 using Ordering.Core.Repositories;
 using RabbitMQ.Client.Events;
 using System;
@@ -35,6 +36,17 @@ namespace Ordering.API.RabbitMQ
             consumer.Received += ReceivedEvent;
 
             channel.BasicConsume(EventBusConstants.SHOPCART_CHECKOUT_QUEUE, true, consumer, false, false, null);
+        }
+
+        private async void ReceivedEvent(object sender, BasicDeliverEventArgs e)
+        {
+            if(e.RoutingKey == EventBusConstants.SHOPCART_CHECKOUT_QUEUE)
+            {
+                var message = Encoding.UTF8.GetString(e.Body.Span);
+                var shopCartCheckoutEvent = JsonConvert.DeserializeObject<ShopCartCheckoutEvent>(message);
+
+                var command = _mapper.Map<CheckoutOrderCommand>(shopCartCheckoutEvent);
+            }
         }
     }
 }
