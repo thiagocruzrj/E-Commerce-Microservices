@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Ordering.Application.Commands;
+using Ordering.Application.Mapper;
 using Ordering.Application.Responses;
+using Ordering.Core.Entities;
 using Ordering.Core.Repositories;
 using System;
 using System.Threading;
@@ -19,7 +21,7 @@ namespace Ordering.Application.Handlers
 
         public Task<OrderResponse> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var orderEntity = OrderMapper.Mapper.Map<Order>(request);
         }
     }
 }
