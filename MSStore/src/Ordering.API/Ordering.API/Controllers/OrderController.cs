@@ -12,7 +12,7 @@ namespace Ordering.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OrderController
+    public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
 
