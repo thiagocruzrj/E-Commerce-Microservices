@@ -46,7 +46,14 @@ namespace Ordering.API.RabbitMQ
                 var shopCartCheckoutEvent = JsonConvert.DeserializeObject<ShopCartCheckoutEvent>(message);
 
                 var command = _mapper.Map<CheckoutOrderCommand>(shopCartCheckoutEvent);
+
+                var result = await _mediator.Send(command);
             }
+        }
+
+        public void Disconnected()
+        {
+            _connection.Dispose();
         }
     }
 }
