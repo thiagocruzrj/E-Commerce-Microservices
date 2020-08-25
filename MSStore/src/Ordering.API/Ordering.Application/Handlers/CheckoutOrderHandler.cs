@@ -19,9 +19,17 @@ namespace Ordering.Application.Handlers
             _orderRepository = orderRepository ?? throw new ArgumentException(nameof(orderRepository));
         }
 
-        public Task<OrderResponse> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
+        public async Task<OrderResponse> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
         {
             var orderEntity = OrderMapper.Mapper.Map<Order>(request);
+            if(orderEntity == null)
+                throw new ApplicationException("not mapped");
+
+            var newOrder = await _orderRepository.AddAsync(orderEntity);
+
+            var orderResponse = OrderMapper.Mapper.Map<OrderResponse>(newOrder);
+
+            return orderResponse;
         }
     }
 }
