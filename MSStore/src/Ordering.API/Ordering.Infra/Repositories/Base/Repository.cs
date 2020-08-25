@@ -1,4 +1,5 @@
-﻿using Ordering.Core.Entities.Base;
+﻿using Microsoft.EntityFrameworkCore;
+using Ordering.Core.Entities.Base;
 using Ordering.Core.Repositories.Base;
 using Ordering.Infra.Data;
 using System;
@@ -33,9 +34,9 @@ namespace Ordering.Infra.Repositories.Base
             throw new NotImplementedException();
         }
 
-        public Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Set<T>().ToListAsync();
         }
 
         public Task<T> GetByIdAsync(int id)
