@@ -13,7 +13,7 @@ namespace Ordering.API
         {
             var host = CreateHostBuilder(args).Build();
             CreateAndSeedDatabase(host);
-            host.RunAsync();
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -33,12 +33,12 @@ namespace Ordering.API
                 try
                 {
                     var orderContext = services.GetRequiredService<OrderContext>();
-                    OrderContextSeed.SeedAsync(orderContext, loggerFactory);
+                    OrderContextSeed.SeedAsync(orderContext, loggerFactory).Wait();
                 }
                 catch (Exception ex)
                 {
                     var logger = loggerFactory.CreateLogger<Program>();
-                    logger.LogError(ex.Message);
+                    logger.LogError(ex, "An error occurred seeding the DB.");
                 }
             }
         }
