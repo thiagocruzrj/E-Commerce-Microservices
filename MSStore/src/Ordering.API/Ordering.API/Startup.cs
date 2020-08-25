@@ -89,6 +89,8 @@ namespace Ordering.API
                 endpoints.MapControllers();
             });
 
+            app.UseRabbitListener();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
