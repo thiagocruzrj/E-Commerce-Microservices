@@ -29,9 +29,18 @@ namespace Ordering.Infra.Repositories.Base
             return await _dbContext.Set<T>().Where(predicate).ToListAsync();
         }
 
-        public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeString = null, bool disableTracking = true)
+        public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeString = null, bool disableTracking = true)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = _dbContext.Set<T>();
+            if (disableTracking) query = query.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(includeString)) query = query.Include(includeString);
+
+            if (predicate != null) query = query.Where(predicate);
+
+            if (orderBy != null)
+                return await orderBy(query).ToListAsync();
+            return await query.ToListAsync();
         }
 
         public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<Expression<Func<T, object>>> includes = null, bool disableTracking = true)
