@@ -19,9 +19,14 @@ namespace Ordering.Infra.Repositories.Base
             _dbContext = dbContext ?? throw new ArgumentException(nameof(dbContext));
         }
 
-        public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Set<T>().ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbContext.Set<T>().Where(predicate).ToListAsync();
         }
 
         public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeString = null, bool disableTracking = true)
@@ -32,11 +37,6 @@ namespace Ordering.Infra.Repositories.Base
         public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<Expression<Func<T, object>>> includes = null, bool disableTracking = true)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<IReadOnlyList<T>> GetAllAsync()
-        {
-            return await _dbContext.Set<T>().ToListAsync();
         }
 
         public Task<T> GetByIdAsync(int id)
