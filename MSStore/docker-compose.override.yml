@@ -59,7 +59,8 @@ services:
       - "8001:80"
 
   ordering.api:
-    container_name: orderapi
+    container_name: orderingapi
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:OrderConnection=Server=orderdb;Database=OrderDb;User Id=sa;Password=Teste@1234"
