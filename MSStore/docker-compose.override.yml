@@ -64,5 +64,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:OrderConnection=Server=orderdb;Database=OrderDb;User Id=sa;Password=Teste@1234"
       - "EventBus:HostName=rabbitmq"
+    depends_on:
+      - orderdb
+      - rabbitmq
+    volumes:
+        - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+        - ${HOME}/.aspnet/https:/root/aspnet/https/
     ports:
       - "8002:80"
