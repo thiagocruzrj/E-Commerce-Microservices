@@ -30,3 +30,9 @@ services:
     build:
       context: .
       dockerfile: src/Ordering.API/Ordering.API/Dockerfile
+
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: src/APIGateway/Dockerfile
