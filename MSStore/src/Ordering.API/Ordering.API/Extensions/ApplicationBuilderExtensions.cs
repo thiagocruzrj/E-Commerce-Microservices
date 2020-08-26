@@ -20,12 +20,12 @@ namespace Ordering.API.Extensions
 
         private static void OnStarted()
         {
-
+            Listener.Consume();
         }
 
         private static void OnStopping()
         {
-
+            Listener.Disconnected();
         }
     }
 }
