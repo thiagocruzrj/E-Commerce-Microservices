@@ -46,3 +46,9 @@ services:
         - ${HOME}/.aspnet/https:/root/aspnet/https/
     ports:
       - "8001:80"
+  ordering.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+

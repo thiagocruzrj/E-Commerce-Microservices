@@ -19,3 +19,10 @@ services:
       context: .
       dockerfile: src/ShopCart.API/Dockerfile
 
+
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: src/Ordering.API/Ordering.API/Dockerfile
+
