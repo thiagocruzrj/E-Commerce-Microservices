@@ -1,10 +1,10 @@
 {
-  "ReRoutes": [
-    // Catalog API
+  "Routes": [
+    //Catalog API
     {
       "DownstreamPathTemplate": "/api/v1/Catalog",
-      "DownstreamPathScheme": "http",
-      "DownstreamPathHostAndPorts": [
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
         {
           "Host": "catalogapi",
           "Port": "80"
@@ -15,8 +15,8 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Catalog/{id}",
-      "DownstreamPathScheme": "http",
-      "DownstreamPathHostAndPorts": [
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
         {
           "Host": "catalogapi",
           "Port": "80"
@@ -27,8 +27,8 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/Catalog/GetProductByCategory/{category}",
-      "DownstreamPathScheme": "http",
-      "DownstreamPathHostAndPorts": [
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
         {
           "Host": "catalogapi",
           "Port": "80"
@@ -37,55 +37,55 @@
       "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    // ShopCart API
+    //Basket API
     {
-      "DownstreamPathTemplate": "/api/v1/ShopCart",
-      "DownstreamPathScheme": "http",
-      "DownstreamPathHostAndPorts": [
+      "DownstreamPathTemplate": "/api/v1/Basket",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
         {
-          "Host": "shopcartapi",
+          "Host": "basketapi",
           "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/ShopCart",
+      "UpstreamPathTemplate": "/Basket",
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/ShopCart/{userName}",
-      "DownstreamPathScheme": "http",
-      "DownstreamPathHostAndPorts": [
+      "DownstreamPathTemplate": "/api/v1/Basket/{userName}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
         {
-          "Host": "shopcartapi",
+          "Host": "basketapi",
           "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/ShopCart/{userName}",
+      "UpstreamPathTemplate": "/Basket/{userName}",
       "UpstreamHttpMethod": [ "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/ShopCart/Checkout",
-      "DownstreamPathScheme": "http",
-      "DownstreamPathHostAndPorts": [
+      "DownstreamPathTemplate": "/api/v1/Basket/Checkout",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
         {
-          "Host": "shopcartapi",
+          "Host": "basketapi",
           "Port": "80"
         }
       ],
-      "UpstreamPathTemplate": "/ShopCart/Checkout",
+      "UpstreamPathTemplate": "/Basket/Checkout",
       "UpstreamHttpMethod": [ "POST" ]
     },
-    // Order Api
+    //Order API
     {
       "DownstreamPathTemplate": "/api/v1/Order",
-      "DownstreamPathScheme": "http",
-      "DownstreamPathHostAndPorts": [
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
         {
           "Host": "orderingapi",
           "Port": "80"
         }
       ],
       "UpstreamPathTemplate": "/Order",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ]
 }
