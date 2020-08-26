@@ -36,6 +36,43 @@
       ],
       "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    // ShopCart API
+    {
+      "DownstreamPathTemplate": "/api/v1/ShopCart",
+      "DownstreamPathScheme": "http",
+      "DownstreamPathHostAndPorts": [
+        {
+          "Host": "shopcartapi",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/ShopCart",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/ShopCart/{userName}",
+      "DownstreamPathScheme": "http",
+      "DownstreamPathHostAndPorts": [
+        {
+          "Host": "shopcartapi",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/ShopCart/{userName}",
+      "UpstreamHttpMethod": [ "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/ShopCart/Checkout",
+      "DownstreamPathScheme": "http",
+      "DownstreamPathHostAndPorts": [
+        {
+          "Host": "shopcartapi",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/ShopCart/Checkout",
+      "UpstreamHttpMethod": [ "POST" ]
     }
   ]
 }
