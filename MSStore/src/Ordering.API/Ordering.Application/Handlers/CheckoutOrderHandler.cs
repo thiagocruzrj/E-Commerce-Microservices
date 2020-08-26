@@ -26,7 +26,6 @@ namespace Ordering.Application.Handlers
                 throw new ApplicationException("not mapped");
 
             var newOrder = await _orderRepository.AddAsync(orderEntity);
-
             var orderResponse = OrderMapper.Mapper.Map<OrderResponse>(newOrder);
 
             return orderResponse;
