@@ -15,5 +15,21 @@ namespace AspnetRunBasics.ApiCollection.Infra
             _apiBuilder = apiBuilder;
             _baseAddress = _apiBuilder.GetLeftPart();
         }
+
+        public HttpRequestBuilder AddToPath(string path)
+        {
+            _apiBuilder.AddToPath(path);
+            _request.RequestUri = _apiBuilder.GetUri();
+
+            return this;
+        }
+
+        public HttpRequestBuilder SetPath(string path)
+        {
+            _apiBuilder.SetPath(path);
+            _request.RequestUri = _apiBuilder.GetUri();
+
+            return this;
+        }
     }
 }
