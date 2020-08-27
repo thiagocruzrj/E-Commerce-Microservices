@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AspnetRunBasics.ApiCollection.Infra
 {
-    public class BaseHttpClientWithFactory
+    public abstract class BaseHttpClientWithFactory
     {
         private readonly IHttpClientFactory _factory;
 
