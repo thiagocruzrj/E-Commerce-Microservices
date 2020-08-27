@@ -2,8 +2,10 @@
 using AspnetRunBasics.ApiCollection.Interfaces;
 using AspnetRunBasics.Models;
 using AspnetRunBasics.Settings;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AspnetRunBasics.ApiCollection
@@ -50,9 +52,17 @@ namespace AspnetRunBasics.ApiCollection
             return await SendRequest<IEnumerable<CatalogModel>>(message);
         }
 
-        public Task<CatalogModel> CreateCatalog(CatalogModel model)
+        public async Task<CatalogModel> CreateCatalog(CatalogModel model)
         {
-            throw new System.NotImplementedException();
+            var message = new HttpRequestBuilder(_settings.BaseAddress)
+                                .SetPath(_settings.CatalogPath)
+                                .HttpMethod(HttpMethod.Post)
+                                .GetHttpMessage();
+
+            var json = JsonConvert.SerializeObject(model);
+            message.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            return await SendRequest<CatalogModel>(message);
         }
     }
 }
