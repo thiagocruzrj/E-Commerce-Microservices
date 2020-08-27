@@ -38,9 +38,16 @@ namespace AspnetRunBasics.ApiCollection
             return await SendRequest<CatalogModel>(message);
         }
 
-        public Task<IEnumerable<CatalogModel>> GetCatalogByCategory(string category)
+        public async Task<IEnumerable<CatalogModel>> GetCatalogByCategory(string category)
         {
-            throw new System.NotImplementedException();
+            var message = new HttpRequestBuilder(_settings.BaseAddress)
+                            .SetPath(_settings.CatalogPath)
+                            .AddToPath("GetProductByCategory")
+                            .AddToPath(category)
+                            .HttpMethod(HttpMethod.Get)
+                            .GetHttpMessage();
+
+            return await SendRequest<IEnumerable<CatalogModel>>(message);
         }
 
         public Task<CatalogModel> CreateCatalog(CatalogModel model)
