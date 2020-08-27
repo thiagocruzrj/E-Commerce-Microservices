@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AspnetRunBasics.ApiCollection.Interfaces;
-using AspnetRunBasics.Models;
+using AspnetRunBasics.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,18 +9,18 @@ namespace AspnetRunBasics
 {
     public class OrderModel : PageModel
     {
-        private readonly IOrderApi _orderApi;
+        private readonly IOrderRepository _orderRepository;
 
-        public OrderModel(IOrderApi orderApi)
+        public OrderModel(IOrderRepository orderRepository)
         {
-            _orderApi = orderApi ?? throw new ArgumentNullException(nameof(orderApi));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         }
 
-        public IEnumerable<OrderResponseModel> Orders { get; set; } = new List<OrderResponseModel>();
+        public IEnumerable<Entities.Order> Orders { get; set; } = new List<Entities.Order>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Orders = await _orderApi.GetOrdersByUserName("swn");
+            Orders = await _orderRepository.GetOrdersByUserName("test");
 
             return Page();
         }       

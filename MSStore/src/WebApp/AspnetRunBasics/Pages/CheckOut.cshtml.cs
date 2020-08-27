@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AspnetRunBasics.ApiCollection.Interfaces;
-using AspnetRunBasics.Models;
+using AspnetRunBasics.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,44 +8,42 @@ namespace AspnetRunBasics
 {
     public class CheckOutModel : PageModel
     {
-        private readonly ICatalogApi _catalogApi;
-        private readonly IBasketApi _basketApi;
+        private readonly ICartRepository _cartRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public CheckOutModel(ICatalogApi catalogApi, IBasketApi basketApi)
+        public CheckOutModel(ICartRepository cartRepository, IOrderRepository orderRepository)
         {
-            _catalogApi = catalogApi ?? throw new ArgumentNullException(nameof(catalogApi));
-            _basketApi = basketApi ?? throw new ArgumentNullException(nameof(basketApi));
+            _cartRepository = cartRepository ?? throw new ArgumentNullException(nameof(cartRepository));
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         }
 
         [BindProperty]
-        public BasketCheckoutModel Order { get; set; }
+        public Entities.Order Order { get; set; }
 
-        public BasketModel Cart { get; set; } = new BasketModel();
+        public Entities.Cart Cart { get; set; } = new Entities.Cart();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var userName = "swn";
-            Cart = await _basketApi.GetBasket(userName);
-            
+            Cart = await _cartRepository.GetCartByUserName("test");
             return Page();
         }
 
         public async Task<IActionResult> OnPostCheckOutAsync()
         {
-            var userName = "swn";
-            Cart = await _basketApi.GetBasket(userName);
+            Cart = await _cartRepository.GetCartByUserName("test");
 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            Order.UserName = userName;
+            Order.UserName = "test";
             Order.TotalPrice = Cart.TotalPrice;
 
-            await _basketApi.CheckoutBasket(Order);
-                        
+            await _orderRepository.CheckOut(Order);
+            await _cartRepository.ClearCart("test");
+            
             return RedirectToPage("Confirmation", "OrderSubmitted");
-        }
+        }       
     }
 }

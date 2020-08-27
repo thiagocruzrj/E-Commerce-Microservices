@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AspnetRunBasics.ApiCollection.Interfaces;
-using AspnetRunBasics.Models;
+using AspnetRunBasics.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,41 +9,29 @@ namespace AspnetRunBasics.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ICatalogApi _catalogApi;
-        private readonly IBasketApi _basketApi;
+        private readonly IProductRepository _productRepository;
+        private readonly ICartRepository _cartRepository;
 
-        public IndexModel(ICatalogApi catalogApi, IBasketApi basketApi)
+        public IndexModel(IProductRepository productRepository, ICartRepository cartRepository)
         {
-            _catalogApi = catalogApi ?? throw new ArgumentNullException(nameof(catalogApi));
-            _basketApi = basketApi ?? throw new ArgumentNullException(nameof(basketApi));
+            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _cartRepository = cartRepository ?? throw new ArgumentNullException(nameof(cartRepository));
         }
 
-        public IEnumerable<CatalogModel> ProductList { get; set; } = new List<CatalogModel>();
+        public IEnumerable<Entities.Product> ProductList { get; set; } = new List<Entities.Product>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ProductList = await _catalogApi.GetCatalog();
+            ProductList = await _productRepository.GetProducts();
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddToCartAsync(string productId)
+        public async Task<IActionResult> OnPostAddToCartAsync(int productId)
         {
-            var product = await _catalogApi.GetCatalog(productId);
+            //if (!User.Identity.IsAuthenticated)
+            //    return RedirectToPage("./Account/Login", new { area = "Identity" });
 
-            var userName = "swn";
-            var basket = await _basketApi.GetBasket(userName);
-
-            basket.Items.Add(new BasketItemModel
-            {
-                ProductId = productId,
-                ProductName = product.Name,
-                Price = product.Price,
-                Quantity = 1,
-                Color = "Black"
-            });
-
-            var basketUpdated = await _basketApi.UpdateBasket(basket);
-            
+            await _cartRepository.AddItem("test", productId);
             return RedirectToPage("Cart");
         }
     }
