@@ -48,5 +48,31 @@ namespace AspnetRunBasics.ApiCollection.Infra
             _request.Content = content;
             return this;
         }
+
+        public HttpRequestBuilder RequestUri(Uri uri)
+        {
+            _request.RequestUri = new ApiBuilder(uri.ToString())
+                .GetUri();
+            return this;
+        }
+
+        public HttpRequestBuilder RequestUri(string uri)
+        {
+            return RequestUri(new Uri(uri));
+        }
+
+        public HttpRequestBuilder BaseAddress(string address)
+        {
+            _baseAddress = address;
+            return this;
+        }
+
+        public HttpRequestBuilder Subdomain(string subdomain)
+        {
+            _apiBuilder.SetSubdomain(subdomain);
+            _request.RequestUri = _apiBuilder.GetUri();
+
+            return this;
+        }
     }
 }
