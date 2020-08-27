@@ -50,5 +50,17 @@ namespace AspnetRunBasics.ApiCollection.Infra
                 _builder.Path = newPath.Replace("//", "/");
             }
         }
+
+        public ApiBuilder Fragment(string fragment)
+        {
+            _builder.Fragment = fragment;
+            return this;
+        }
+
+        public ApiBuilder SetSubdomain(string subDomain)
+        {
+            _builder.Host = string.Concat(subDomain, ".", new Uri(_fullUrl).Host);
+            return this;
+        }
     }
 }
