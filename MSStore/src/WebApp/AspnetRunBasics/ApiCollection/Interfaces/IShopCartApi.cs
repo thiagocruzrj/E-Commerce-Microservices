@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace AspnetRunBasics.ApiCollection.Interfaces
 {
-    interface ShopCartApi
+    public interface IShopCartApi
     {
         Task<ShopCartModel> GetShopCart(string userName);
         Task<ShopCartModel> UpdateShopCart(ShopCartModel model);
