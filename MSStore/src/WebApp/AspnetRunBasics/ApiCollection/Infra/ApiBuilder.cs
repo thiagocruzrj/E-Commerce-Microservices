@@ -84,5 +84,22 @@ namespace AspnetRunBasics.ApiCollection.Infra
             }
             return this;
         }
+
+        public ApiBuilder UserName(string username)
+        {
+            _builder.UserName = username;
+            return this;
+        }
+
+        public ApiBuilder Password(string password)
+        {
+            _builder.Password = password;
+            return this;
+        }
+
+        public string GetLeftPart()
+        {
+            return _builder.Uri.GetLeftPart(UriPartial.Path);
+        }
     }
 }
