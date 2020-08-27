@@ -29,7 +29,7 @@ namespace AspnetRunBasics.ApiCollection.Infra
 
         public ApiBuilder AddToPatch(string patch)
         {
-            IncluedePatch(patch);
+            IncludePath(patch);
             return this;
         }
 
@@ -37,6 +37,18 @@ namespace AspnetRunBasics.ApiCollection.Infra
         {
             _builder.Path = patch;
             return this;
+        }
+
+        public void IncludePath(string path)
+        {
+            if(string.IsNullOrEmpty(_builder.Path) || _builder.Path == "/")
+            {
+                _builder.Path = path;
+            } else
+            {
+                var newPath = $"{_builder.Path}/{path}";
+                _builder.Path = newPath.Replace("//", "/");
+            }
         }
     }
 }
