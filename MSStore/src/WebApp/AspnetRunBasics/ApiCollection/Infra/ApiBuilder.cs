@@ -20,5 +20,23 @@ namespace AspnetRunBasics.ApiCollection.Infra
             _builder.Scheme = scheme;
             return this;
         }
+
+        public ApiBuilder Host(string host)
+        {
+            _builder.Host = host;
+            return this;
+        }
+
+        public ApiBuilder AddToPatch(string patch)
+        {
+            IncluedePatch(patch);
+            return this;
+        }
+
+        public ApiBuilder SetPatch(string patch)
+        {
+            _builder.Path = patch;
+            return this;
+        }
     }
 }
