@@ -12,5 +12,13 @@ namespace AspnetRunBasics.ApiCollection.Infra
             _fullUrl = url;
             _builder = new UriBuilder(url);
         }
+
+        public Uri GetUri() => _builder.Uri;
+
+        public ApiBuilder Scheme(string scheme)
+        {
+            _builder.Scheme = scheme;
+            return this;
+        }
     }
 }
