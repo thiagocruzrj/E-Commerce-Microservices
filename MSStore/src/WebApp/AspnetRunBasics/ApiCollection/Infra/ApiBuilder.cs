@@ -28,24 +28,32 @@ namespace AspnetRunBasics.ApiCollection.Infra
             return this;
         }
 
-        public ApiBuilder AddToPatch(string patch)
+        public ApiBuilder Port(int port)
         {
-            IncludePath(patch);
+            _builder.Port = port;
             return this;
         }
 
-        public ApiBuilder SetPatch(string patch)
+        public ApiBuilder AddToPath(string path)
         {
-            _builder.Path = patch;
+            IncludePath(path);
+            return this;
+        }
+
+        public ApiBuilder SetPath(string path)
+        {
+            _builder.Path = path;
             return this;
         }
 
         public void IncludePath(string path)
         {
-            if(string.IsNullOrEmpty(_builder.Path) || _builder.Path == "/")
+            if (string.IsNullOrEmpty(_builder.Path)
+                || _builder.Path == "/")
             {
                 _builder.Path = path;
-            } else
+            }
+            else
             {
                 var newPath = $"{_builder.Path}/{path}";
                 _builder.Path = newPath.Replace("//", "/");
@@ -58,10 +66,16 @@ namespace AspnetRunBasics.ApiCollection.Infra
             return this;
         }
 
-        public ApiBuilder SetSubdomain(string subDomain)
+        public ApiBuilder SetSubdomain(string subdomain)
         {
-            _builder.Host = string.Concat(subDomain, ".", new Uri(_fullUrl).Host);
+            _builder.Host = string.Concat(subdomain, ".", new Uri(_fullUrl).Host);
             return this;
+        }
+
+        public bool HasSubdomain()
+        {
+            return _builder.Uri.HostNameType == UriHostNameType.Dns
+                   && _builder.Uri.Host.Split('.').Length > 2;
         }
 
         public ApiBuilder AddQueryString(string name, string value)

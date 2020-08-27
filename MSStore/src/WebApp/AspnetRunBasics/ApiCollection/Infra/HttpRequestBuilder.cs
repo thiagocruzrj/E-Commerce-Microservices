@@ -1,4 +1,7 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Specialized;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace AspnetRunBasics.ApiCollection.Infra
 {
@@ -29,6 +32,18 @@ namespace AspnetRunBasics.ApiCollection.Infra
             _apiBuilder.SetPath(path);
             _request.RequestUri = _apiBuilder.GetUri();
 
+            return this;
+        }
+
+        public HttpRequestBuilder HttpMethod(HttpMethod httpMethod)
+        {
+            _request.Method = httpMethod;
+            return this;
+        }
+
+        public HttpRequestBuilder Headers(Action<HttpRequestHeaders> funcOfHeaders)
+        {
+            funcOfHeaders(_request.Headers);
             return this;
         }
 
@@ -73,6 +88,32 @@ namespace AspnetRunBasics.ApiCollection.Infra
             _request.RequestUri = _apiBuilder.GetUri();
 
             return this;
+        }
+
+        public HttpRequestBuilder AddQueryString(string name, string value)
+        {
+            _apiBuilder.AddQueryString(name, value);
+            _request.RequestUri = _apiBuilder.GetUri();
+
+            return this;
+        }
+
+        public HttpRequestBuilder SetQueryString(string qs)
+        {
+            _apiBuilder.QueryString(qs);
+            _request.RequestUri = _apiBuilder.GetUri();
+
+            return this;
+        }
+
+        public HttpRequestMessage GetHttpMessage()
+        {
+            return _request;
+        }
+
+        public ApiBuilder GetApiBuilder()
+        {
+            return new ApiBuilder(_request.RequestUri.ToString());
         }
     }
 }
