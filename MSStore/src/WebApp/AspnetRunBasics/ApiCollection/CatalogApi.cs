@@ -17,9 +17,14 @@ namespace AspnetRunBasics.ApiCollection
             _settings = settings;
         }
 
-        public Task<IEnumerable<CatalogModel>> GetCatalog()
+        public async Task<IEnumerable<CatalogModel>> GetCatalog()
         {
-            throw new System.NotImplementedException();
+            var message = new HttpRequestBuilder(_settings.BaseAddress)
+                            .SetPath(_settings.CatalogPath)
+                            .HttpMethod(HttpMethod.Get)
+                            .GetHttpMessage();
+
+            return await SendRequest<IEnumerable<CatalogModel>>(message);
         }
 
         public Task<CatalogModel> GetCatalogById(string id)
