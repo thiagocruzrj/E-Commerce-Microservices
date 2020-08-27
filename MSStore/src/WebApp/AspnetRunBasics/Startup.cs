@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace AspnetRunBasics
 {
@@ -19,6 +20,8 @@ namespace AspnetRunBasics
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ApiSettings>(Configuration.GetSection(nameof(ApiSettings)));
+            services.AddSingleton<IApiSettings>(s => s.GetRequiredService<IOptions<ApiSettings>>().Value);
+
             services.AddRazorPages();
         }
 
