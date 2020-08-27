@@ -31,5 +31,22 @@ namespace AspnetRunBasics.ApiCollection.Infra
 
             return this;
         }
+
+        public HttpRequestBuilder Headers(NameValueCollection headers)
+        {
+            _request.Headers.Clear();
+            foreach (var item in headers.AllKeys)
+            {
+                _request.Headers.Add(item, headers[item]);
+            }
+
+            return this;
+        }
+
+        public HttpRequestBuilder Content(HttpContent content)
+        {
+            _request.Content = content;
+            return this;
+        }
     }
 }
