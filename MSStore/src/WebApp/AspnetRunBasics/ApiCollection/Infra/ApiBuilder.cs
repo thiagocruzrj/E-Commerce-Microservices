@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 
 namespace AspnetRunBasics.ApiCollection.Infra
 {
@@ -60,6 +61,18 @@ namespace AspnetRunBasics.ApiCollection.Infra
         public ApiBuilder SetSubdomain(string subDomain)
         {
             _builder.Host = string.Concat(subDomain, ".", new Uri(_fullUrl).Host);
+            return this;
+        }
+
+        public ApiBuilder AddQueryString(string name, string value)
+        {
+            var qsNv = HttpUtility.ParseQueryString(_builder.Query);
+            qsNv[name] = string.IsNullOrEmpty(qsNv[name])
+                ? value
+                : string.Concat(qsNv[name], ",", value);
+
+            _builder.Query = qsNv.ToString();
+
             return this;
         }
     }
