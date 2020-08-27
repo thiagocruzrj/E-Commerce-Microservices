@@ -17,9 +17,15 @@ namespace AspnetRunBasics.ApiCollection
             _settings = settings;
         }
 
-        public Task<IEnumerable<OrderResponseModel>> GetOrdersByUserName(string userName)
+        public async Task<IEnumerable<OrderResponseModel>> GetOrdersByUserName(string userName)
         {
-            throw new System.NotImplementedException();
+            var message = new HttpRequestBuilder(_settings.BaseAddress)
+                                .BaseAddress(_settings.OrderPath)
+                                .AddQueryString("userName", userName)
+                                .HttpMethod(HttpMethod.Get)
+                                .GetHttpMessage();
+
+            return await SendRequest<IEnumerable<OrderResponseModel>>(message);
         }
     }
 }
