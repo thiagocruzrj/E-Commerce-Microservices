@@ -16,9 +16,16 @@ namespace AspnetRunBasics.ApiCollection
             _settings = settings;
         }
 
-        public Task<ShopCartModel> GetShopCart(string userName)
+        public async Task<ShopCartModel> GetShopCart(string userName)
         {
-            throw new System.NotImplementedException();
+            var message = new HttpRequestBuilder(_settings.BaseAddress)
+                                .SetPath(_settings.ShopCartPath)
+                                .AddToPath("UserName")
+                                .AddToPath(userName)
+                                .HttpMethod(HttpMethod.Get)
+                                .GetHttpMessage();
+
+            return await SendRequest<ShopCartModel>(message);
         }
 
         public Task<ShopCartModel> UpdateShopCart(ShopCartModel model)
