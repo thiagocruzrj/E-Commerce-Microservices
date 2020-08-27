@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using AspnetRunBasics.Models;
+using System.Threading.Tasks;
 
 namespace AspnetRunBasics.ApiCollection.Interfaces
 {

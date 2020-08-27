@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AspnetRunBasics.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AspnetRunBasics.ApiCollection.Interfaces
@@ -7,7 +8,7 @@ namespace AspnetRunBasics.ApiCollection.Interfaces
     {
         Task<IEnumerable<CatalogModel>> GetCatalog();
         Task<IEnumerable<CatalogModel>> GetCatalogByCategory(string category);
-        Task<CaltalogModel> GetCatalogById(string id);
+        Task<CatalogModel> GetCatalogById(string id);
         Task<CatalogModel> CreateCatalog(CatalogModel model);
     }
 }
