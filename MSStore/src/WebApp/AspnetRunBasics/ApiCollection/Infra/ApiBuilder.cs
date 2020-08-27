@@ -75,5 +75,14 @@ namespace AspnetRunBasics.ApiCollection.Infra
 
             return this;
         }
+
+        public ApiBuilder QueryString(string queryString)
+        {
+            if (!string.IsNullOrEmpty(queryString))
+            {
+                _builder.Query = queryString;
+            }
+            return this;
+        }
     }
 }
