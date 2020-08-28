@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AspnetRunBasics.Repositories;
+using AspnetRunBasics.ApiCollection.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,13 +9,13 @@ namespace AspnetRunBasics.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IProductRepository _productRepository;
-        private readonly ICartRepository _cartRepository;
+        private readonly ICatalogApi _catalogApi;
+        private readonly IShopCartApi _shopCartApi;
 
-        public IndexModel(IProductRepository productRepository, ICartRepository cartRepository)
+        public IndexModel(ICatalogApi catalogApi, IShopCartApi shopCartApi)
         {
-            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-            _cartRepository = cartRepository ?? throw new ArgumentNullException(nameof(cartRepository));
+            _catalogApi = catalogApi ?? throw new ArgumentNullException(nameof(catalogApi));
+            _shopCartApi = shopCartApi ?? throw new ArgumentNullException(nameof(shopCartApi));
         }
 
         public IEnumerable<Entities.Product> ProductList { get; set; } = new List<Entities.Product>();
