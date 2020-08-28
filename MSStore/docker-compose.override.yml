@@ -95,7 +95,7 @@ services:
       - "ApiSettings:BaseAddress=apigateway"
     depends_on:
       - catalog.api
-      - basket.api
+      - shopcart.api
       - ordering.api
       - apigateway
     volumes:
