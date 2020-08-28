@@ -7,7 +7,7 @@ using AspnetRunBasics.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AspnetRunBasics
+namespace AspnetRunBasics.Pages
 {
     public class ProductModel : PageModel
     {
@@ -48,12 +48,12 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnPostAddToCartAsync(string productId)
         {
-            var product = await _catalogApi.GetCatalog(productId);
+            var product = await _catalogApi.GetCatalogById(productId);
 
             var userName = "swn";
-            var basket = await _basketApi.GetBasket(userName);
+            var basket = await _shopCartApi.GetShopCart(userName);
 
-            basket.Items.Add(new BasketItemModel
+            basket.Items.Add(new ShopCartItemModel
             {
                 ProductId = productId,
                 ProductName = product.Name,
@@ -62,7 +62,7 @@ namespace AspnetRunBasics
                 Color = "Black"
             });
 
-            var basketUpdated = await _basketApi.UpdateBasket(basket);
+            var basketUpdated = await _shopCartApi.UpdateShopCart(basket);
 
             return RedirectToPage("Cart");
         }
