@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
-using AspnetRunBasics.Entities;
-using AspnetRunBasics.Repositories;
+using AspnetRunBasics.ApiCollection.Interfaces;
+using AspnetRunBasics.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,25 +10,33 @@ namespace AspnetRunBasics
 {
     public class CartModel : PageModel
     {
-        private readonly ICartRepository _cartRepository;
+        private readonly IShopCartApi _shopCartApi;
 
-        public CartModel(ICartRepository cartRepository)
+        public CartModel(IShopCartApi shopCartApi)
         {
-            _cartRepository = cartRepository ?? throw new ArgumentNullException(nameof(cartRepository));
+            _shopCartApi = shopCartApi ?? throw new ArgumentNullException(nameof(shopCartApi));
         }
 
-        public Entities.Cart Cart { get; set; } = new Entities.Cart();        
+        public ShopCartModel Cart { get; set; } = new ShopCartModel();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Cart = await _cartRepository.GetCartByUserName("test");            
+            var userName = "testUser";
+            Cart = await _shopCartApi.GetShopCart(userName);
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRemoveToCartAsync(int cartId, int cartItemId)
+        public async Task<IActionResult> OnPostRemoveToCartAsync(string productId)
         {
-            await _cartRepository.RemoveItem(cartId, cartItemId);
+            var userName = "testUser";
+            var basket = await _shopCartApi.GetShopCart(userName);
+
+            var item = basket.Items.Single(x => x.ProductId == productId);
+            basket.Items.Remove(item);
+
+            var basketUpdated = await _shopCartApi.UpdateShopCart(basket);
+
             return RedirectToPage();
         }
     }
